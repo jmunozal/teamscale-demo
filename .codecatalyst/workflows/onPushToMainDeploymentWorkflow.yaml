@@ -1,0 +1,58 @@
+Name: onPushToMainDeploymentWorkflow
+SchemaVersion: "1.0"
+Triggers:
+  - Type: PUSH
+    Branches:
+      - main
+Actions:
+  BackendTest:
+    Identifier: aws/managed-test@v1
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Outputs:
+      AutoDiscoverReports:
+        IncludePaths:
+          - "**/*"
+        ExcludePaths:
+          - "*/.aws/workflows/*"
+        ReportNamePrefix: AutoDiscovered
+        Enabled: true
+    Configuration:
+      Steps:
+        - Run: mvn compile -q
+        - Run: mvn verify
+        - Run: echo "Merge XML reports for CDK" && REPORT_PATH="target/surefire-reports" &&  npx junit-merge -o $REPORT_PATH/cdk_test_unit_results.xml -d $REPORT_PATH/ && rm $REPORT_PATH/*Test.xml && echo "Merge XML reports for lambda" && REPORT_PATH="lambda/target/surefire-reports" &&  npx junit-merge -o $REPORT_PATH/lambda_test_unit_results.xml -d $REPORT_PATH/ && rm $REPORT_PATH/*Test.xml
+  BackendCDKBootstrapAction:
+    Identifier: aws/cdk-bootstrap@v1
+    Compute:
+      Type: Lambda
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Configuration:
+      Region: eu-central-1
+    Environment:
+      Name: default_environment
+      Connections:
+        - Name: ProductShared
+          Role: CodeCatalystWorkflowDevelopmentRole-cc-workshop-jm
+  BackendCDKDeploy:
+    Identifier: aws/cdk-deploy@v1
+    Compute:
+      Type: EC2
+    Inputs:
+      Sources:
+        - WorkflowSource
+    DependsOn:
+      - BackendCDKBootstrapAction
+      - BackendTest
+    Configuration:
+      StackName: TsAppBackendStack-yqwau
+      Region: eu-central-1
+      Context: '{"stack_name": "TsAppBackendStack-yqwau"}'
+    Environment:
+      Name: default_environment
+      Connections:
+        - Name: ProductShared
+          Role: CodeCatalystWorkflowDevelopmentRole-cc-workshop-jm

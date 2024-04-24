@@ -1,0 +1,13 @@
+{
+  "script": [
+    "for directory in /projects/* ; do",
+    "  if [ -d \"$directory/.cloud9/runners\" ]; then",
+    "    REPOSITORY_DIR=$directory",
+    "  fi",
+    "done",
+    "echo $REPOSITORY_DIR",
+    "cd $REPOSITORY_DIR",
+    "mvn test -Pinteg"
+  ],
+  "info" : "This runner will run end to end tests."
+}
