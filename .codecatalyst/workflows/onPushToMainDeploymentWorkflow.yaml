@@ -28,7 +28,6 @@ Actions:
         - WorkflowSource
     DependsOn:
       - BackendCDKBootstrapAction
-      - BackendTest
     Configuration:
       StackName: TodoAppBackendStack-py14y
       Region: eu-central-1
