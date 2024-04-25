@@ -8,7 +8,7 @@ public class TodoApiApp {
     public static void main(final String[] args) {
         App app = new App();
 
-        new TodoApiStack(app, "TsAppBackendStack-yqwau", StackProps.builder()
+        new TodoApiStack(app, "TsAppBackendStack-py14y", StackProps.builder()
                 // If you don't specify 'env', this stack will be environment-agnostic.
                 // Account/Region-dependent features and context lookups will not work,
                 // but a single synthesized template can be deployed anywhere.
