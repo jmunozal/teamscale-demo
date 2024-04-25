@@ -33,7 +33,7 @@ Actions:
     Configuration:
       Region: eu-central-1
     Environment:
-      Name: dev
+      Name: development-2
       Connections:
         - Name: ProductShared
           Role: CodeCatalystWorkflowDevelopmentRole-cc-workshop-jm
@@ -52,7 +52,7 @@ Actions:
       Region: eu-central-1
       Context: '{"stack_name": "TsAppBackendStack-yqwau"}'
     Environment:
-      Name: dev
+      Name: development-2
       Connections:
         - Name: ProductShared
           Role: CodeCatalystWorkflowDevelopmentRole-cc-workshop-jm
