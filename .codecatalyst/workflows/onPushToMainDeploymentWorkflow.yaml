@@ -48,9 +48,9 @@ Actions:
       - BackendCDKBootstrapAction
       - BackendTest
     Configuration:
-      StackName: TsAppBackendStack-yqwau
+      StackName: TsAppBackendStack-jmatest
       Region: eu-central-1
-      Context: '{"stack_name": "TsAppBackendStack-yqwau"}'
+      Context: '{"stack_name": "TsAppBackendStack-jmatest"}'
     Environment:
       Name: development-2
       Connections:
