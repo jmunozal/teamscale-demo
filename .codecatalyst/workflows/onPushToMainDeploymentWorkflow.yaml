@@ -5,24 +5,6 @@ Triggers:
     Branches:
       - main
 Actions:
-  BackendTest:
-    Identifier: aws/managed-test@v1
-    Inputs:
-      Sources:
-        - WorkflowSource
-    Outputs:
-      AutoDiscoverReports:
-        IncludePaths:
-          - "**/*"
-        ExcludePaths:
-          - "*/.aws/workflows/*"
-        ReportNamePrefix: AutoDiscovered
-        Enabled: true
-    Configuration:
-      Steps:
-        - Run: mvn compile -q
-        - Run: mvn verify
-        - Run: echo "Merge XML reports for CDK" && REPORT_PATH="target/surefire-reports" &&  npx junit-merge -o $REPORT_PATH/cdk_test_unit_results.xml -d $REPORT_PATH/ && rm $REPORT_PATH/*Test.xml && echo "Merge XML reports for lambda" && REPORT_PATH="lambda/target/surefire-reports" &&  npx junit-merge -o $REPORT_PATH/lambda_test_unit_results.xml -d $REPORT_PATH/ && rm $REPORT_PATH/*Test.xml
   BackendCDKBootstrapAction:
     Identifier: aws/cdk-bootstrap@v1
     Compute:
@@ -33,7 +15,7 @@ Actions:
     Configuration:
       Region: eu-central-1
     Environment:
-      Name: development-2
+      Name: default_environment
       Connections:
         - Name: ProductShared
           Role: CodeCatalystWorkflowDevelopmentRole-cc-workshop-jm
@@ -48,11 +30,11 @@ Actions:
       - BackendCDKBootstrapAction
       - BackendTest
     Configuration:
-      StackName: TsAppBackendStack-jmatest
+      StackName: TodoAppBackendStack-py14y
       Region: eu-central-1
-      Context: '{"stack_name": "TsAppBackendStack-jmatest"}'
+      Context: '{"stack_name": "TodoAppBackendStack-py14y"}'
     Environment:
-      Name: development-2
+      Name: default_environment
       Connections:
         - Name: ProductShared
           Role: CodeCatalystWorkflowDevelopmentRole-cc-workshop-jm
