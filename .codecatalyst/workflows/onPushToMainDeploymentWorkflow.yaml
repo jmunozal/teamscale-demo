@@ -29,9 +29,9 @@ Actions:
     DependsOn:
       - BackendCDKBootstrapAction
     Configuration:
-      StackName: TodoAppBackendStack-py14y
+      StackName: TsAppBackendStack-py14y
       Region: eu-central-1
-      Context: '{"stack_name": "TodoAppBackendStack-py14y"}'
+      Context: '{"stack_name": "TsAppBackendStack-py14y"}'
     Environment:
       Name: default_environment
       Connections:
