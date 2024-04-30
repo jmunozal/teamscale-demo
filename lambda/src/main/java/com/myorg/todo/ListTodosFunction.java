@@ -58,6 +58,7 @@ public class ListTodosFunction extends TodoRequestHandler {
             Map<String, String> headers = new HashMap<>();
             headers.put("X-max-results", String.valueOf(todos.getTotal()));
             if (todos.getNextToken() != null){
+
                 headers.put("X-next-token", todos.getNextToken());
             }
 

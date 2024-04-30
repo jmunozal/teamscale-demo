@@ -1,1 +1,4 @@
 /target/
+lambda/target/*
+.idea
+cdk.out/
